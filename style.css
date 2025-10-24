@@ -1,3 +1,15 @@
+/* Brand color variables (inspired by NASA brand & WDS) */
+:root {
+  --nasa-blue: #0b3d91;     /* primary blue */
+  --nasa-blue-dark: #062a66;/* darker for hover/contrast */
+  --nasa-red: #d71920;      /* accent / alert */
+  --bg-surface: #f4f6fb;    /* light neutral background */
+  --card-bg: #ffffff;
+  --muted: #666666;
+  --text: #212121;
+  --focus: 3px solid rgba(11,61,145,0.2);
+}
+
 /* Global reset & box sizing */
 * {
   box-sizing: border-box;
@@ -7,9 +19,10 @@
 
 /* Base page styles */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
+  font-family: 'Noto Sans', Arial, sans-serif;
+  background-color: var(--bg-surface);
   padding: 20px;
+  color: var(--text);
 }
 
 /* Centered container */
@@ -28,16 +41,19 @@ body {
   margin-bottom: 20px;
 }
 
+/* Heading uses NASA blue for strong branding */
 h1 {
-  font-family: Verdana, sans-serif;
-  font-weight: bold;
-  color: #212121;
+  font-family: 'Noto Sans', Verdana, sans-serif;
+  font-weight: 700;
+  color: var(--nasa-blue);
 }
 
 /* Logo */
 .logo {
   width: 140px;
   margin-right: 15px;
+  /* keep logo crisp on colored backgrounds */
+  image-rendering: -webkit-optimize-contrast;
 }
 
 /* Date‐picker & button row */
@@ -53,9 +69,9 @@ h1 {
 /* Inputs and buttons */
 input[type="date"],
 button {
-  font-family: Arial, sans-serif;
-  font-weight: normal;
-  color: #666;
+  font-family: 'Noto Sans', Arial, sans-serif;
+  font-weight: 400;
+  color: var(--muted);
   padding: 10px 15px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -64,14 +80,28 @@ button {
   width: 100%;
 }
 
-/* Button specific */
+/* Button specific: use NASA blue and white text */
 button {
-  background-color: #d3d3d3;
-  color: black;
+  background-color: var(--nasa-blue);
+  color: white;
   cursor: pointer;
+  border: none;
 }
 button:hover {
-  background-color: #bfbfbf;
+  background-color: var(--nasa-blue-dark);
+}
+button:focus {
+  outline: var(--focus);
+  outline-offset: 2px;
+}
+
+/* Links adopt brand blue */
+a {
+  color: var(--nasa-blue);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 /* Stack horizontally on wider screens */
@@ -101,7 +131,7 @@ button:hover {
   flex: 1 1 100%;  /* full width by default */
   min-width: 280px;
   max-width: 500px;
-  background: white;
+  background: var(--card-bg);
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -122,6 +152,17 @@ button:hover {
   height: 200px;
   object-fit: cover;
   border-radius: 4px;
+
+  /* New: smooth scaling and shadow transition */
+  transition: transform 300ms ease, box-shadow 300ms ease;
+  will-change: transform;
+}
+
+/* Scale image slightly on hover or keyboard focus within the card */
+.gallery-item:hover img,
+.gallery-item:focus-within img {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .gallery-item p {
@@ -141,4 +182,157 @@ button:hover {
 .placeholder-icon {
   font-size: 48px;
   margin-bottom: 20px;
+}
+
+/* Thumbnail wrapper for videos */
+.thumb-wrap {
+  position: relative;
+}
+
+/* Play overlay button styles */
+.play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(215,25,32,0.9); /* var(--nasa-red) with opacity */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.play-overlay:focus {
+  outline: 2px solid rgba(255,255,255,0.6);
+}
+
+/* Embedded video sizing */
+.video-iframe iframe,
+.video-iframe video {
+  width: 100%;
+  height: 300px;
+  border-radius: 4px;
+  display: block;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal.open {
+  display: flex;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  z-index: 1001;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-body {
+  margin-top: 24px;
+}
+
+.modal-media img,
+.modal-media iframe,
+.modal-media video {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: 4px;
+  display: block;
+}
+
+.modal-title {
+  margin-top: 12px;
+  font-size: 20px;
+  color: var(--nasa-blue);
+}
+
+.modal-date {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #555;
+}
+
+.modal-explanation {
+  margin-top: 12px;
+  font-size: 15px;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Did You Know section styles */
+.did-you-know {
+  max-width: 800px;
+  margin: 0 auto 16px;           /* center the block horizontally */
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, rgba(11,61,145,0.06), rgba(215,25,32,0.03));
+  border: 1px solid rgba(11,61,145,0.08);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;        /* stack label above fact */
+  gap: 8px;
+  align-items: center;           /* center contents horizontally */
+  text-align: center;            /* center the text */
+}
+
+.did-you-know strong {
+  color: var(--nasa-blue);
+  font-weight: 700;
+  display: block;                /* ensure label is on its own line */
+}
+
+.did-you-know p {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+}
+
+/* focus outlines for accessibility on interactive elements inside modal */
+.modal-close:focus,
+.play-overlay:focus,
+button:focus {
+  outline: var(--focus);
 }

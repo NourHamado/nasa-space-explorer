@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NASA Space Explorer</title>
+  <!-- Add Noto Sans (clean, widely available sans similar to NASA web typography) -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;700&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -17,10 +19,30 @@
       <button id="getImageBtn">Fetch Space Images</button>
     </div>
 
+    <!-- Did You Know block shown on page load -->
+    <section id="didYouKnow" class="did-you-know" aria-live="polite">
+      <strong>Did you know?</strong>
+      <p id="didYouKnowText">Loading a fun space fact…</p>
+    </section>
+
     <div id="gallery" class="gallery">
       <div class="placeholder">
         <div class="placeholder-icon">🔭</div>
         <p>Click "Fetch Space Images" to explore the cosmos!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for larger view & explanation -->
+  <div id="mediaModal" class="modal" aria-hidden="true">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" aria-label="Close modal" data-modal-close>&times;</button>
+      <div class="modal-body">
+        <div class="modal-media"></div>
+        <h2 id="modalTitle" class="modal-title"></h2>
+        <p class="modal-date"></p>
+        <p class="modal-explanation"></p>
       </div>
     </div>
   </div>
